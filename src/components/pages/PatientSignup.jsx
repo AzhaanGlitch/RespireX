@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 
-export default PatientSignup;
-
 const PatientSignup = ({ onNavigate, onBack }) => {
   const [formData, setFormData] = useState({
     fullName: '',
@@ -177,3 +175,5 @@ const PatientSignup = ({ onNavigate, onBack }) => {
     </div>
   );
 };
+
+export default PatientSignup;
