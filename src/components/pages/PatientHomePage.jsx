@@ -1,8 +1,6 @@
 import React from 'react';
 import { Activity, FileText, LogOut } from 'lucide-react';
 
-export default PatientHomePage;
-
 const PatientHomePage = ({ onNavigate, onLogout }) => {
   return (
     <div className="min-h-screen bg-gray-50">
@@ -97,3 +95,5 @@ const PatientHomePage = ({ onNavigate, onLogout }) => {
     </div>
   );
 };
+
+export default PatientHomePage;
