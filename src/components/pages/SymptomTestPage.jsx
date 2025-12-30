@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Activity } from 'lucide-react';
 
-export default SymptomTestPage;
-
 const SymptomTestPage = ({ onNavigate }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState({});
@@ -63,7 +61,6 @@ const SymptomTestPage = ({ onNavigate }) => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Navigation */}
       <nav className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
@@ -81,7 +78,6 @@ const SymptomTestPage = ({ onNavigate }) => {
         </div>
       </nav>
 
-      {/* Progress Bar */}
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-3xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between mb-2">
@@ -99,7 +95,6 @@ const SymptomTestPage = ({ onNavigate }) => {
         </div>
       </div>
 
-      {/* Question Content */}
       <div className="max-w-3xl mx-auto px-4 py-12">
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
           <h2 className="text-2xl font-semibold text-gray-900 mb-8">
@@ -122,3 +117,5 @@ const SymptomTestPage = ({ onNavigate }) => {
     </div>
   );
 };
+
+export default SymptomTestPage;
