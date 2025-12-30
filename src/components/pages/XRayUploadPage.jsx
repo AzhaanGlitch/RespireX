@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Activity, Upload } from 'lucide-react';
 
-export default XRayUploadPage;
-
 const XRayUploadPage = ({ onNavigate }) => {
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
@@ -21,7 +19,6 @@ const XRayUploadPage = ({ onNavigate }) => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Navigation */}
       <nav className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
@@ -98,3 +95,5 @@ const XRayUploadPage = ({ onNavigate }) => {
     </div>
   );
 };
+
+export default XRayUploadPage;
