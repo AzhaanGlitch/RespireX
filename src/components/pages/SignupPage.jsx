@@ -3,8 +3,6 @@ import { Activity, User, Stethoscope } from 'lucide-react';
 import PatientSignup from './PatientSignup';
 import DoctorSignup from './DoctorSignup';
 
-export default SignupPage;
-
 const SignupPage = ({ onNavigate }) => {
   const [userType, setUserType] = useState(null);
 
@@ -57,3 +55,5 @@ const SignupPage = ({ onNavigate }) => {
 
   return <PatientSignup onNavigate={onNavigate} onBack={() => setUserType(null)} />;
 };
+
+export default SignupPage;
