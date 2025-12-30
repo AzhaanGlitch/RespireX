@@ -15,7 +15,7 @@ const TestResultPage = ({ onNavigate }) => {
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-2">
               <Activity className="w-8 h-8 text-blue-600" />
-              <span className="text-xl font-bold text-gray-900">TB DetectCare</span>
+              <span className="text-xl font-bold text-gray-900">RespireX</span>
             </div>
           </div>
         </div>
@@ -65,7 +65,7 @@ const TestResultPage = ({ onNavigate }) => {
         </div>
 
         <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6 mb-8">
-          <h4 className="font-semibold text-gray-900 mb-2">⚠️ Important Disclaimer</h4>
+          <h4 className="font-semibold text-gray-900 mb-2">Important Disclaimer</h4>
           <p className="text-sm text-gray-700">
             This is a preliminary screening tool and should not be considered as a definitive medical diagnosis.
           </p>
