@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Activity, Users, CheckCircle, AlertCircle, User, LogOut, MapPin } from 'lucide-react';
 
-export default DoctorHomePage;
-
 const DoctorHomePage = ({ onNavigate, onLogout }) => {
   const [selectedState, setSelectedState] = useState('all');
   
@@ -188,3 +186,5 @@ const DoctorHomePage = ({ onNavigate, onLogout }) => {
     </div>
   );
 };
+
+export default DoctorHomePage;
