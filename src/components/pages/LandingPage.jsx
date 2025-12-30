@@ -1,8 +1,6 @@
 import React from 'react';
 import { Heart, Activity, Users } from 'lucide-react';
 
-export default LandingPage;
-
 const LandingPage = ({ onNavigate }) => {
   return (
     <div className="min-h-screen bg-white">
@@ -84,3 +82,5 @@ const LandingPage = ({ onNavigate }) => {
     </div>
   );
 };
+
+export default LandingPage;
