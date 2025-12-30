@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Activity, Mail, Lock } from 'lucide-react';
 
-export default LoginPage;
-
 const LoginPage = ({ onNavigate }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -68,3 +66,5 @@ const LoginPage = ({ onNavigate }) => {
     </div>
   );
 };
+
+export default LoginPage;
