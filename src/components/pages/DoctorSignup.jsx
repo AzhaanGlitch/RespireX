@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Stethoscope } from 'lucide-react';
 
-export default DoctorSignup;
-
 const DoctorSignup = ({ onNavigate, onBack }) => {
   const [credentials, setCredentials] = useState({
     accessCode: '',
@@ -67,3 +65,5 @@ const DoctorSignup = ({ onNavigate, onBack }) => {
     </div>
   );
 };
+
+export default DoctorSignup;
