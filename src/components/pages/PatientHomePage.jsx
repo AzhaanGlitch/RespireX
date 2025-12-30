@@ -10,7 +10,7 @@ const PatientHomePage = ({ onNavigate, onLogout }) => {
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-2">
               <Activity className="w-8 h-8 text-blue-600" />
-              <span className="text-xl font-bold text-gray-900">TB DetectCare</span>
+              <span className="text-xl font-bold text-gray-900">RespireX</span>
             </div>
             <button
               onClick={onLogout}
