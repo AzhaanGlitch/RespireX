@@ -10,7 +10,7 @@ const LandingPage = ({ onNavigate }) => {
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-2">
               <Activity className="w-8 h-8 text-blue-600" />
-              <span className="text-xl font-bold text-gray-900">TB DetectCare</span>
+              <span className="text-xl font-bold text-gray-900">RespireX</span>
             </div>
             <button
               onClick={() => onNavigate('login')}
@@ -76,7 +76,7 @@ const LandingPage = ({ onNavigate }) => {
       {/* Footer */}
       <footer className="bg-white border-t border-gray-200 py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-600">
-          <p>&copy; 2024 TB DetectCare. Part of Atmanirbhar Bharat Mission.</p>
+          <p>&copy; 2025 RespireX. Part of Atmanirbhar Bharat Mission.</p>
         </div>
       </footer>
     </div>
