@@ -1,30 +1,16 @@
 import React from 'react';
-import { Activity, Zap, TrendingUp, Shield, ChevronRight } from 'lucide-react';
+import { Zap, TrendingUp, Shield, ChevronRight } from 'lucide-react';
+import Navbar from '../common/Navbar';
+import Footer from '../common/Footer';
 
 const LandingPage = ({ onNavigate }) => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
-      {/* Fixed Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 glass-effect border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
-            <div className="flex items-center space-x-3 animate-slide-left">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center shadow-lg">
-                <Activity className="w-6 h-6 text-white" strokeWidth={2.5} />
-              </div>
-              <span className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
-                RespireX
-              </span>
-            </div>
-            <button
-              onClick={() => onNavigate('login')}
-              className="px-8 py-3 bg-gray-900 text-white rounded-full hover:bg-gray-800 transition font-medium shadow-lg hover:shadow-xl btn-primary animate-slide-right"
-            >
-              Sign In
-            </button>
-          </div>
-        </div>
-      </nav>
+      {/* Common Navigation */}
+      <Navbar 
+        showLoginButton={true}
+        onLogin={() => onNavigate('login')}
+      />
 
       {/* Hero Section - Centered Text Only */}
       <div className="pt-48 pb-20 px-6 lg:px-8 text-center">
@@ -106,12 +92,12 @@ const LandingPage = ({ onNavigate }) => {
               </div>
             </div>
 
-            {/* Right Column: The Image (Moved from Hero) */}
+            {/* Right Column: The Image */}
             <div className="order-1 lg:order-2 relative animate-fade-in stagger-4">
               <div className="relative z-10">
                 <div className="relative w-full h-[400px] rounded-3xl overflow-hidden shadow-2xl">
                   <img 
-                    src="../landing_page_tb.png"
+                    src="/landing_page_tb.png"
                     alt="TB Detection Interface" 
                     className="w-full h-full object-cover" 
                   />
@@ -163,20 +149,7 @@ const LandingPage = ({ onNavigate }) => {
       </div>
 
       {/* Footer */}
-      <footer className="bg-white border-t border-gray-100 py-12">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center">
-            <div className="flex items-center justify-center space-x-3 mb-4">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center">
-                <Activity className="w-5 h-5 text-white" strokeWidth={2.5} />
-              </div>
-              <span className="text-xl font-bold text-gray-900">RespireX</span>
-            </div>
-            <p className="text-gray-600">Part of Atmanirbhar Bharat Mission</p>
-            <p className="text-gray-500 text-sm mt-2">&copy; 2025 RespireX. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };
