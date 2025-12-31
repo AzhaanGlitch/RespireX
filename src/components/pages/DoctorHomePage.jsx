@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Activity, Users, CheckCircle, AlertCircle, User, LogOut, MapPin } from 'lucide-react';
+import { Activity, Users, CheckCircle, AlertCircle, User, LogOut, MapPin, Filter } from 'lucide-react';
 
 const DoctorHomePage = ({ onNavigate, onLogout }) => {
   const [selectedState, setSelectedState] = useState('all');
@@ -53,133 +53,133 @@ const DoctorHomePage = ({ onNavigate, onLogout }) => {
     }
   ];
 
-  const filteredPatients = selectedState === 'all' 
+  const filteredPatients = selectedState === 'all' || selectedState === 'All States'
     ? patients 
     : patients.filter(p => p.state === selectedState);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-cyan-50">
       {/* Navigation */}
-      <nav className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-2">
-              <Activity className="w-8 h-8 text-blue-600" />
-              <span className="text-xl font-bold text-gray-900">RespireX - Doctor Portal</span>
+      <nav className="fixed top-0 left-0 right-0 z-50 glass-effect border-b border-gray-100">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="flex justify-between items-center h-20">
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 bg-gradient-to-br from-cyan-600 to-cyan-700 rounded-xl flex items-center justify-center shadow-lg">
+                <Activity className="w-6 h-6 text-white" strokeWidth={2.5} />
+              </div>
+              <span className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+                RespireX
+              </span>
+              <span className="px-3 py-1 bg-cyan-100 text-cyan-700 rounded-full text-sm font-semibold">Doctor</span>
             </div>
             <button
               onClick={onLogout}
-              className="flex items-center space-x-2 text-gray-600 hover:text-gray-900"
+              className="flex items-center space-x-2 px-6 py-3 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition"
             >
               <LogOut className="w-5 h-5" />
-              <span>Logout</span>
+              <span className="font-medium">Logout</span>
             </button>
           </div>
         </div>
       </nav>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Patient Dashboard</h1>
-          <p className="text-gray-600 mt-2">Monitor and manage patient records</p>
-        </div>
+      <div className="pt-32 pb-20 px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          {/* Header */}
+          <div className="mb-12 animate-fade-in">
+            <h1 className="text-5xl font-bold text-gray-900 mb-4">Patient Dashboard</h1>
+            <p className="text-xl text-gray-600">Monitor and manage patient records</p>
+          </div>
 
-        {/* Stats Cards */}
-        <div className="grid md:grid-cols-4 gap-6 mb-8">
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <div className="flex items-center justify-between mb-2">
-              <Users className="w-8 h-8 text-blue-600" />
-              <span className="text-2xl font-bold text-gray-900">248</span>
-            </div>
-            <p className="text-sm text-gray-600">Total Patients</p>
-          </div>
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <div className="flex items-center justify-between mb-2">
-              <CheckCircle className="w-8 h-8 text-green-600" />
-              <span className="text-2xl font-bold text-gray-900">198</span>
-            </div>
-            <p className="text-sm text-gray-600">Negative Cases</p>
-          </div>
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <div className="flex items-center justify-between mb-2">
-              <AlertCircle className="w-8 h-8 text-orange-600" />
-              <span className="text-2xl font-bold text-gray-900">35</span>
-            </div>
-            <p className="text-sm text-gray-600">Positive Cases</p>
-          </div>
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <div className="flex items-center justify-between mb-2">
-              <Activity className="w-8 h-8 text-purple-600" />
-              <span className="text-2xl font-bold text-gray-900">15</span>
-            </div>
-            <p className="text-sm text-gray-600">Under Review</p>
-          </div>
-        </div>
-
-        {/* Filter Section */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
-          <div className="flex items-center space-x-4">
-            <MapPin className="w-5 h-5 text-gray-400" />
-            <select
-              value={selectedState}
-              onChange={(e) => setSelectedState(e.target.value)}
-              className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            >
-              <option value="all">All States</option>
-              {states.slice(1).map(state => (
-                <option key={state} value={state}>{state}</option>
-              ))}
-            </select>
-          </div>
-        </div>
-
-        {/* Patient List */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200">
-          <div className="p-6 border-b border-gray-200">
-            <h2 className="text-xl font-semibold text-gray-900">Patient Records</h2>
-          </div>
-          <div className="divide-y divide-gray-200">
-            {filteredPatients.map((patient) => (
-              <div key={patient.id} className="p-6 hover:bg-gray-50 transition">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                      <User className="w-6 h-6 text-blue-600" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-gray-900">{patient.name}</h3>
-                      <p className="text-sm text-gray-600">
-                        Age {patient.age} • {patient.city}, {patient.state}
-                      </p>
-                    </div>
+          {/* Stats Cards */}
+          <div className="grid md:grid-cols-4 gap-6 mb-12">
+            {[
+              { icon: Users, label: "Total Patients", value: "248", gradient: "from-blue-500 to-blue-600" },
+              { icon: CheckCircle, label: "Negative Cases", value: "198", gradient: "from-green-500 to-green-600" },
+              { icon: AlertCircle, label: "Positive Cases", value: "35", gradient: "from-orange-500 to-orange-600" },
+              { icon: Activity, label: "Under Review", value: "15", gradient: "from-purple-500 to-purple-600" }
+            ].map((stat, idx) => (
+              <div key={idx} className={`bg-white rounded-2xl shadow-lg border border-gray-100 p-6 hover-lift animate-fade-in stagger-${idx + 1}`}>
+                <div className="flex items-center justify-between mb-4">
+                  <div className={`w-12 h-12 bg-gradient-to-br ${stat.gradient} rounded-xl flex items-center justify-center shadow-lg`}>
+                    <stat.icon className="w-6 h-6 text-white" strokeWidth={2} />
                   </div>
-                  <div className="flex items-center space-x-6">
-                    <div className="text-right">
-                      <p className="text-sm text-gray-600">Last Test</p>
-                      <p className="font-medium text-gray-900">{patient.lastTest}</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-sm text-gray-600">Result</p>
-                      <p className={`font-medium ${patient.result === 'Positive' ? 'text-orange-600' : 'text-green-600'}`}>
-                        {patient.result}
-                      </p>
-                    </div>
-                    <div>
-                      <span className={`px-4 py-1 rounded-full text-sm font-medium ${
-                        patient.riskLevel === 'High' ? 'bg-red-100 text-red-800' :
-                        patient.riskLevel === 'Medium' ? 'bg-yellow-100 text-yellow-800' :
-                        'bg-green-100 text-green-800'
-                      }`}>
-                        {patient.riskLevel} Risk
-                      </span>
-                    </div>
-                    <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm font-medium">
-                      View Details
-                    </button>
-                  </div>
+                  <span className="text-4xl font-bold text-gray-900">{stat.value}</span>
                 </div>
+                <p className="text-sm font-medium text-gray-600">{stat.label}</p>
               </div>
             ))}
+          </div>
+
+          {/* Filter Section */}
+          <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 mb-8 animate-fade-in stagger-5">
+            <div className="flex items-center space-x-4">
+              <Filter className="w-5 h-5 text-gray-400" />
+              <MapPin className="w-5 h-5 text-gray-400" />
+              <select
+                value={selectedState}
+                onChange={(e) => setSelectedState(e.target.value)}
+                className="flex-1 px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition text-gray-900 font-medium"
+              >
+                {states.map(state => (
+                  <option key={state} value={state}>{state}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          {/* Patient List */}
+          <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden animate-fade-in stagger-5">
+            <div className="px-8 py-6 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white">
+              <h2 className="text-2xl font-bold text-gray-900">Patient Records</h2>
+              <p className="text-gray-600 mt-1">Total {filteredPatients.length} patients</p>
+            </div>
+            <div className="divide-y divide-gray-100">
+              {filteredPatients.map((patient, idx) => (
+                <div key={patient.id} className={`p-8 hover:bg-gray-50 transition-all animate-fade-in stagger-${idx + 1}`}>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-6">
+                      <div className="w-14 h-14 bg-gradient-to-br from-cyan-100 to-blue-100 rounded-2xl flex items-center justify-center">
+                        <User className="w-7 h-7 text-cyan-600" strokeWidth={2} />
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-gray-900 text-lg mb-1">{patient.name}</h3>
+                        <p className="text-gray-600 flex items-center space-x-2">
+                          <span>Age {patient.age}</span>
+                          <span className="text-gray-400">•</span>
+                          <MapPin className="w-4 h-4" />
+                          <span>{patient.city}, {patient.state}</span>
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-center space-x-8">
+                      <div className="text-right">
+                        <p className="text-sm text-gray-500 mb-1">Last Test</p>
+                        <p className="font-semibold text-gray-900">{patient.lastTest}</p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-sm text-gray-500 mb-1">Result</p>
+                        <p className={`font-bold ${patient.result === 'Positive' ? 'text-orange-600' : 'text-green-600'}`}>
+                          {patient.result}
+                        </p>
+                      </div>
+                      <div>
+                        <span className={`px-6 py-2 rounded-xl text-sm font-semibold ${
+                          patient.riskLevel === 'High' ? 'bg-red-100 text-red-700' :
+                          patient.riskLevel === 'Medium' ? 'bg-yellow-100 text-yellow-700' :
+                          'bg-green-100 text-green-700'
+                        }`}>
+                          {patient.riskLevel} Risk
+                        </span>
+                      </div>
+                      <button className="px-6 py-3 bg-gray-900 text-white rounded-xl hover:bg-gray-800 transition font-semibold shadow-lg hover:shadow-xl btn-primary">
+                        View Details
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
