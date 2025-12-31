@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { Activity, Users, CheckCircle, AlertCircle, User, LogOut, MapPin, Filter } from 'lucide-react';
+import { Activity, Users, CheckCircle, AlertCircle, User, MapPin, Filter } from 'lucide-react';
+import Navbar from '../common/Navbar';
+import Footer from '../common/Footer';
 
 const DoctorHomePage = ({ onNavigate, onLogout }) => {
   const [selectedState, setSelectedState] = useState('all');
@@ -58,32 +60,11 @@ const DoctorHomePage = ({ onNavigate, onLogout }) => {
     : patients.filter(p => p.state === selectedState);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-cyan-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-cyan-50 flex flex-col">
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 glass-effect border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-cyan-600 to-cyan-700 rounded-xl flex items-center justify-center shadow-lg">
-                <Activity className="w-6 h-6 text-white" strokeWidth={2.5} />
-              </div>
-              <span className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
-                RespireX
-              </span>
-              <span className="px-3 py-1 bg-cyan-100 text-cyan-700 rounded-full text-sm font-semibold">Doctor</span>
-            </div>
-            <button
-              onClick={onLogout}
-              className="flex items-center space-x-2 px-6 py-3 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition"
-            >
-              <LogOut className="w-5 h-5" />
-              <span className="font-medium">Logout</span>
-            </button>
-          </div>
-        </div>
-      </nav>
+      <Navbar onLogout={onLogout} userType="doctor" />
 
-      <div className="pt-32 pb-20 px-6 lg:px-8">
+      <div className="flex-grow pt-32 pb-20 px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="mb-12 animate-fade-in">
@@ -183,6 +164,9 @@ const DoctorHomePage = ({ onNavigate, onLogout }) => {
           </div>
         </div>
       </div>
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };
