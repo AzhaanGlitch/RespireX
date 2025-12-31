@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Activity } from 'lucide-react';
+import { Activity, X, Check } from 'lucide-react';
 
 const SymptomTestPage = ({ onNavigate }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -60,57 +60,92 @@ const SymptomTestPage = ({ onNavigate }) => {
   const progress = ((currentQuestion + 1) / questions.length) * 100;
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <nav className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-2">
-              <Activity className="w-8 h-8 text-blue-600" />
-              <span className="text-xl font-bold text-gray-900">RespireX</span>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+      {/* Navigation */}
+      <nav className="fixed top-0 left-0 right-0 z-50 glass-effect border-b border-gray-100">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="flex justify-between items-center h-20">
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center shadow-lg">
+                <Activity className="w-6 h-6 text-white" strokeWidth={2.5} />
+              </div>
+              <span className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+                RespireX
+              </span>
             </div>
             <button
               onClick={() => onNavigate('patient-home')}
-              className="text-gray-600 hover:text-gray-900"
+              className="flex items-center space-x-2 px-6 py-3 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition"
             >
-              Cancel Test
+              <X className="w-5 h-5" />
+              <span className="font-medium">Cancel Test</span>
             </button>
           </div>
         </div>
       </nav>
 
-      <div className="bg-white border-b border-gray-200">
-        <div className="max-w-3xl mx-auto px-4 py-4">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-sm font-medium text-gray-700">
+      {/* Progress Bar */}
+      <div className="fixed top-20 left-0 right-0 bg-white border-b border-gray-100 z-40">
+        <div className="max-w-4xl mx-auto px-6 py-6">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-sm font-semibold text-gray-700">
               Question {currentQuestion + 1} of {questions.length}
             </span>
-            <span className="text-sm font-medium text-gray-700">{Math.round(progress)}%</span>
+            <span className="text-sm font-semibold text-blue-600">{Math.round(progress)}% Complete</span>
           </div>
-          <div className="w-full bg-gray-200 rounded-full h-2">
+          <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
             <div
-              className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+              className="bg-gradient-to-r from-blue-600 to-cyan-600 h-3 rounded-full transition-all duration-500 ease-out progress-bar"
               style={{ width: `${progress}%` }}
             />
           </div>
         </div>
       </div>
 
-      <div className="max-w-3xl mx-auto px-4 py-12">
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-8">
-            {questions[currentQuestion].question}
-          </h2>
+      {/* Main Content */}
+      <div className="pt-44 pb-20 px-6">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-white rounded-3xl shadow-2xl border border-gray-100 p-12 animate-scale">
+            <div className="mb-12">
+              <div className="inline-block px-4 py-2 bg-blue-50 rounded-full mb-6">
+                <span className="text-sm font-semibold text-blue-600">Symptom Assessment</span>
+              </div>
+              <h2 className="text-4xl font-bold text-gray-900 leading-relaxed">
+                {questions[currentQuestion].question}
+              </h2>
+            </div>
 
-          <div className="space-y-4">
-            {questions[currentQuestion].options.map((option, index) => (
+            <div className="space-y-4">
+              {questions[currentQuestion].options.map((option, index) => (
+                <button
+                  key={index}
+                  onClick={() => handleAnswer(option)}
+                  className="group w-full p-8 border-2 border-gray-200 rounded-2xl hover:border-blue-500 hover:bg-blue-50 transition-all text-left font-semibold text-gray-900 text-xl hover-lift flex items-center justify-between"
+                >
+                  <span>{option}</span>
+                  <div className="w-8 h-8 rounded-full border-2 border-gray-300 group-hover:border-blue-500 group-hover:bg-blue-500 transition-all flex items-center justify-center">
+                    <Check className="w-5 h-5 text-white opacity-0 group-hover:opacity-100 transition" strokeWidth={3} />
+                  </div>
+                </button>
+              ))}
+            </div>
+
+            {/* Question Navigation */}
+            {currentQuestion > 0 && (
               <button
-                key={index}
-                onClick={() => handleAnswer(option)}
-                className="w-full p-6 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition text-left font-medium text-gray-900"
+                onClick={() => setCurrentQuestion(currentQuestion - 1)}
+                className="mt-8 text-gray-600 hover:text-gray-900 font-medium"
               >
-                {option}
+                ← Previous Question
               </button>
-            ))}
+            )}
+          </div>
+
+          {/* Info Card */}
+          <div className="mt-8 bg-white rounded-2xl border border-gray-100 p-6 text-center animate-fade-in">
+            <p className="text-gray-600">
+              <span className="font-semibold text-gray-900">Privacy Note:</span> Your responses are confidential and used only for screening purposes
+            </p>
           </div>
         </div>
       </div>
