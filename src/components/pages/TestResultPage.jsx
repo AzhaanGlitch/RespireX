@@ -1,5 +1,6 @@
 import React from 'react';
-import { Activity, CheckCircle, AlertTriangle, Download, Share2, Home, FileText } from 'lucide-react';
+import { CheckCircle, AlertTriangle, Download, Share2, Home, FileText } from 'lucide-react';
+import Navbar from '../common/Navbar';
 
 const TestResultPage = ({ onNavigate }) => {
   const result = {
@@ -11,20 +12,7 @@ const TestResultPage = ({ onNavigate }) => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 glass-effect border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center shadow-lg">
-                <Activity className="w-6 h-6 text-white" strokeWidth={2.5} />
-              </div>
-              <span className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
-                RespireX
-              </span>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <Navbar />
 
       <div className="pt-32 pb-20 px-6">
         <div className="max-w-5xl mx-auto">
