@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Activity, Upload, Image as ImageIcon, X, Check } from 'lucide-react';
+import { Upload, Image, Check } from 'lucide-react';
+import Navbar from '../common/Navbar';
 
 const XRayUploadPage = ({ onNavigate }) => {
   const [file, setFile] = useState(null);
@@ -47,27 +48,10 @@ const XRayUploadPage = ({ onNavigate }) => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 glass-effect border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center shadow-lg">
-                <Activity className="w-6 h-6 text-white" strokeWidth={2.5} />
-              </div>
-              <span className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
-                RespireX
-              </span>
-            </div>
-            <button
-              onClick={() => onNavigate('patient-home')}
-              className="flex items-center space-x-2 px-6 py-3 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition"
-            >
-              <X className="w-5 h-5" />
-              <span className="font-medium">Cancel</span>
-            </button>
-          </div>
-        </div>
-      </nav>
+      <Navbar 
+        showCancelButton={true}
+        onCancel={() => onNavigate('patient-home')}
+      />
 
       <div className="pt-32 pb-20 px-6">
         <div className="max-w-4xl mx-auto">
@@ -137,7 +121,7 @@ const XRayUploadPage = ({ onNavigate }) => {
                 <div className="bg-gray-50 rounded-2xl p-6 flex items-center justify-between">
                   <div className="flex items-center space-x-4">
                     <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
-                      <ImageIcon className="w-6 h-6 text-blue-600" />
+                      <Image className="w-6 h-6 text-blue-600" />
                     </div>
                     <div>
                       <p className="font-semibold text-gray-900">{file?.name}</p>
@@ -182,7 +166,7 @@ const XRayUploadPage = ({ onNavigate }) => {
           {/* Guidelines */}
           <div className="mt-8 bg-gradient-to-r from-blue-50 to-cyan-50 border-2 border-blue-200 rounded-2xl p-8 animate-fade-in stagger-1">
             <h4 className="font-bold text-gray-900 text-xl mb-4 flex items-center space-x-2">
-              <ImageIcon className="w-6 h-6 text-blue-600" />
+              <Image className="w-6 h-6 text-blue-600" />
               <span>Image Guidelines</span>
             </h4>
             <ul className="space-y-3 text-gray-700">
