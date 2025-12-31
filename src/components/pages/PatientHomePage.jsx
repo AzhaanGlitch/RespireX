@@ -1,94 +1,136 @@
 import React from 'react';
-import { Activity, FileText, LogOut } from 'lucide-react';
+import { Activity, FileText, LogOut, Clock, Shield, Zap, ChevronRight } from 'lucide-react';
 
 const PatientHomePage = ({ onNavigate, onLogout }) => {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
       {/* Navigation */}
-      <nav className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-2">
-              <Activity className="w-8 h-8 text-blue-600" />
-              <span className="text-xl font-bold text-gray-900">RespireX</span>
+      <nav className="fixed top-0 left-0 right-0 z-50 glass-effect border-b border-gray-100">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="flex justify-between items-center h-20">
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center shadow-lg">
+                <Activity className="w-6 h-6 text-white" strokeWidth={2.5} />
+              </div>
+              <span className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+                RespireX
+              </span>
             </div>
             <button
               onClick={onLogout}
-              className="flex items-center space-x-2 text-gray-600 hover:text-gray-900"
+              className="flex items-center space-x-2 px-6 py-3 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition"
             >
               <LogOut className="w-5 h-5" />
-              <span>Logout</span>
+              <span className="font-medium">Logout</span>
             </button>
           </div>
         </div>
       </nav>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Welcome Back</h1>
-          <p className="text-gray-600 mt-2">Ready to start your TB screening test?</p>
-        </div>
+      <div className="pt-32 pb-20 px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          {/* Welcome Section */}
+          <div className="mb-12 animate-fade-in">
+            <h1 className="text-5xl font-bold text-gray-900 mb-4">Welcome Back</h1>
+            <p className="text-xl text-gray-600">Ready to start your TB screening test?</p>
+          </div>
 
-        <div className="grid md:grid-cols-2 gap-8">
-          {/* Start Test Card */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
-            <div className="flex items-center space-x-3 mb-6">
-              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                <FileText className="w-6 h-6 text-blue-600" />
+          {/* Main Action Cards */}
+          <div className="grid lg:grid-cols-2 gap-8 mb-12">
+            {/* Start Test Card */}
+            <div className="group bg-white rounded-3xl shadow-xl border border-gray-100 p-10 hover-lift animate-fade-in stagger-1">
+              <div className="flex items-center space-x-4 mb-6">
+                <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                  <FileText className="w-8 h-8 text-white" strokeWidth={2} />
+                </div>
+                <h2 className="text-3xl font-bold text-gray-900">Quick TB Test</h2>
               </div>
-              <h2 className="text-2xl font-semibold text-gray-900">Quick TB Test</h2>
+              <p className="text-gray-600 text-lg mb-8 leading-relaxed">
+                Answer a few questions about your symptoms and upload your chest X-ray for AI-powered analysis.
+              </p>
+              <button
+                onClick={() => onNavigate('symptom-test')}
+                className="group/btn w-full py-4 bg-gray-900 text-white rounded-xl hover:bg-gray-800 transition font-semibold text-lg shadow-lg hover:shadow-xl btn-primary flex items-center justify-center space-x-2"
+              >
+                <span>Start Test</span>
+                <ChevronRight className="w-5 h-5 group-hover/btn:translate-x-1 transition" />
+              </button>
             </div>
-            <p className="text-gray-600 mb-6">
-              Answer a few questions about your symptoms and upload your chest X-ray for AI-powered analysis.
-            </p>
-            <button
-              onClick={() => onNavigate('symptom-test')}
-              className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium"
-            >
-              Start Test
-            </button>
-          </div>
 
-          {/* Test History Card */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
-            <div className="flex items-center space-x-3 mb-6">
-              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                <Activity className="w-6 h-6 text-green-600" />
+            {/* Test History Card */}
+            <div className="group bg-white rounded-3xl shadow-xl border border-gray-100 p-10 hover-lift animate-fade-in stagger-2">
+              <div className="flex items-center space-x-4 mb-6">
+                <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                  <Activity className="w-8 h-8 text-white" strokeWidth={2} />
+                </div>
+                <h2 className="text-3xl font-bold text-gray-900">Test History</h2>
               </div>
-              <h2 className="text-2xl font-semibold text-gray-900">Test History</h2>
+              <p className="text-gray-600 text-lg mb-8 leading-relaxed">
+                View your previous test results and track your health progress over time.
+              </p>
+              <button
+                onClick={() => onNavigate('test-history')}
+                className="group/btn w-full py-4 bg-gray-100 text-gray-900 rounded-xl hover:bg-gray-200 transition font-semibold text-lg flex items-center justify-center space-x-2"
+              >
+                <span>View History</span>
+                <ChevronRight className="w-5 h-5 group-hover/btn:translate-x-1 transition" />
+              </button>
             </div>
-            <p className="text-gray-600 mb-6">
-              View your previous test results and track your health progress over time.
-            </p>
-            <button
-              onClick={() => onNavigate('test-history')}
-              className="w-full py-3 bg-gray-100 text-gray-900 rounded-lg hover:bg-gray-200 transition font-medium"
-            >
-              View History
-            </button>
           </div>
-        </div>
 
-        {/* Information Cards */}
-        <div className="mt-8 grid md:grid-cols-3 gap-6">
-          <div className="bg-blue-50 rounded-xl p-6 border border-blue-100">
-            <h3 className="font-semibold text-gray-900 mb-2">Early Detection</h3>
-            <p className="text-sm text-gray-600">
-              Early diagnosis of TB significantly improves treatment outcomes and reduces transmission risk.
-            </p>
+          {/* Information Cards */}
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              {
+                icon: Clock,
+                title: "Early Detection",
+                desc: "Early diagnosis of TB significantly improves treatment outcomes and reduces transmission risk.",
+                gradient: "from-blue-500 to-blue-600"
+              },
+              {
+                icon: Zap,
+                title: "AI-Powered",
+                desc: "Our advanced machine learning model provides accurate preliminary screening results.",
+                gradient: "from-cyan-500 to-cyan-600"
+              },
+              {
+                icon: Shield,
+                title: "Secure & Private",
+                desc: "Your health data is encrypted and stored securely with strict privacy measures.",
+                gradient: "from-indigo-500 to-indigo-600"
+              }
+            ].map((card, idx) => (
+              <div 
+                key={idx}
+                className={`bg-white rounded-2xl p-8 border border-gray-100 hover-lift animate-fade-in stagger-${idx + 3} shadow-sm hover:shadow-xl transition-shadow duration-300`}
+              >
+                <div className={`w-14 h-14 bg-gradient-to-br ${card.gradient} rounded-xl flex items-center justify-center mb-6 shadow-lg`}>
+                  <card.icon className="w-7 h-7 text-white" strokeWidth={2} />
+                </div>
+                <h3 className="font-bold text-gray-900 text-xl mb-3">{card.title}</h3>
+                <p className="text-gray-600 leading-relaxed">{card.desc}</p>
+              </div>
+            ))}
           </div>
-          <div className="bg-green-50 rounded-xl p-6 border border-green-100">
-            <h3 className="font-semibold text-gray-900 mb-2">AI-Powered</h3>
-            <p className="text-sm text-gray-600">
-              Our advanced machine learning model provides accurate preliminary screening results.
-            </p>
-          </div>
-          <div className="bg-purple-50 rounded-xl p-6 border border-purple-100">
-            <h3 className="font-semibold text-gray-900 mb-2">Secure & Private</h3>
-            <p className="text-sm text-gray-600">
-              Your health data is encrypted and stored securely with strict privacy measures.
-            </p>
+
+          {/* Health Tips Section */}
+          <div className="mt-12 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-3xl p-10 text-white animate-fade-in stagger-4">
+            <h3 className="text-3xl font-bold mb-4">Health Tips</h3>
+            <ul className="space-y-3 text-lg">
+              <li className="flex items-center space-x-3">
+                <div className="w-2 h-2 bg-white rounded-full"></div>
+                <span>Maintain proper ventilation in living spaces</span>
+              </li>
+              <li className="flex items-center space-x-3">
+                <div className="w-2 h-2 bg-white rounded-full"></div>
+                <span>Practice good hygiene and cover your mouth when coughing</span>
+              </li>
+              <li className="flex items-center space-x-3">
+                <div className="w-2 h-2 bg-white rounded-full"></div>
+                <span>Seek medical attention if symptoms persist for more than 2 weeks</span>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
