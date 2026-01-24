@@ -1,20 +1,61 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Zap, TrendingUp, Shield, ChevronRight } from 'lucide-react';
 import Navbar from '../common/Navbar';
 import Footer from '../common/Footer';
+import api from '../../lib/api'; 
 
-const LandingPage = ({ onNavigate }) => {
+const LandingPage = ({ onNavigate, user, onLogout }) => {
+  // 🆕 Initialize as null to distinguish between "loading" and "0"
+  const [totalTests, setTotalTests] = useState(null);
+
+  useEffect(() => {
+    // 🆕 Fetch stats independently of User Auth
+    const fetchStats = async () => {
+      try {
+        console.log("📊 Fetching public stats...");
+        // Ensure your backend allows this endpoint to be public!
+        const response = await api.get('/stats/'); 
+        const count = response.data.total_tests || 0;
+        console.log("✅ Stats received:", count);
+        setTotalTests(count);
+      } catch (error) {
+        console.warn("⚠️ Could not fetch stats (using default 0):", error.message);
+        setTotalTests(0); 
+      }
+    };
+
+    fetchStats();
+  }, []);
+  
+  const handleGetStarted = () => {
+    if (user) {
+      onNavigate('patient-home');
+    } else {
+      onNavigate('signup');
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
-      {/* Common Navigation */}
+      
       <Navbar 
-        showLoginButton={true}
         onLogin={() => onNavigate('login')}
+        onNavigate={onNavigate} 
+        isLoggedIn={!!user}     
+        user={user}             
+        onLogout={onLogout}     
       />
 
-      {/* Hero Section - Centered Text Only */}
-      <div className="pt-48 pb-20 px-6 lg:px-8 text-center">
-        <div className="max-w-5xl mx-auto">
+      {/* Hero Section */}
+      <div 
+        className="relative pt-48 pb-20 px-6 lg:px-8 text-center bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: "url('/landing_page_bg.jpg')" 
+        }}
+      >
+        <div className="absolute inset-0 bg-white/60"></div>
+
+        <div className="relative z-10 max-w-5xl mx-auto">
           <div className="inline-block px-4 py-2 bg-blue-50 rounded-full mb-8 animate-fade-in">
             <span className="text-sm font-semibold text-blue-600">AI-Powered Healthcare</span>
           </div>
@@ -33,7 +74,7 @@ const LandingPage = ({ onNavigate }) => {
 
           <div className="flex justify-center animate-fade-in stagger-3">
             <button
-              onClick={() => onNavigate('login')}
+              onClick={handleGetStarted}
               className="group px-10 py-5 bg-gray-900 text-white text-lg rounded-full hover:bg-gray-800 transition shadow-2xl hover:shadow-3xl flex items-center space-x-3 btn-primary"
             >
               <span className="font-medium">Get Started</span>
@@ -48,7 +89,6 @@ const LandingPage = ({ onNavigate }) => {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             
-            {/* Left Column: Why Choose & Features */}
             <div className="order-2 lg:order-1">
               <div className="mb-10 animate-fade-in">
                 <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">Why Choose RespireX</h2>
@@ -92,7 +132,6 @@ const LandingPage = ({ onNavigate }) => {
               </div>
             </div>
 
-            {/* Right Column: The Image */}
             <div className="order-1 lg:order-2 relative animate-fade-in stagger-4">
               <div className="relative z-10">
                 <div className="relative w-full h-[400px] rounded-3xl overflow-hidden shadow-2xl">
@@ -103,7 +142,6 @@ const LandingPage = ({ onNavigate }) => {
                   />
                 </div>
               </div>
-              {/* Floating elements */}
               <div className="absolute -top-6 -right-6 w-32 h-32 bg-blue-600 rounded-3xl opacity-10 animate-pulse"></div>
               <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-cyan-600 rounded-3xl opacity-10 animate-pulse" style={{animationDelay: '1s'}}></div>
             </div>
@@ -112,22 +150,37 @@ const LandingPage = ({ onNavigate }) => {
         </div>
       </div>
 
-      {/* Stats Section */}
+      {/* Stats Section - Updated */}
       <div className="py-20 bg-gradient-to-br from-gray-50 to-blue-50">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid md:grid-cols-3 gap-8 text-center">
-            {[
-              { number: "10,000+", label: "Tests Completed" },
-              { number: "98%", label: "Accuracy Rate" },
-              { number: "24/7", label: "Available Support" }
-            ].map((stat, idx) => (
-              <div key={idx} className={`animate-fade-in stagger-${idx + 1}`}>
-                <div className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent mb-2">
-                  {stat.number}
-                </div>
-                <div className="text-gray-600 font-medium">{stat.label}</div>
+            
+            {/* 1. Tests Completed (Real Data) */}
+            <div className="animate-fade-in stagger-1">
+              {/* Display Logic: If > 0, show number. If 0 or null, show message. */}
+              <div className={`font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent mb-2 ${
+                totalTests > 0 ? 'text-5xl' : 'text-3xl lg:text-4xl'
+              }`}>
+                {totalTests > 0 ? `${totalTests}+` : "Start Screening"}
               </div>
-            ))}
+              <div className="text-gray-600 font-medium">Tests Completed</div>
+            </div>
+
+            {/* 2. Static Stats */}
+            <div className="animate-fade-in stagger-2">
+              <div className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent mb-2">
+                98%
+              </div>
+              <div className="text-gray-600 font-medium">Accuracy Rate</div>
+            </div>
+
+            <div className="animate-fade-in stagger-3">
+              <div className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent mb-2">
+                24/7
+              </div>
+              <div className="text-gray-600 font-medium">Available Support</div>
+            </div>
+
           </div>
         </div>
       </div>
@@ -140,7 +193,7 @@ const LandingPage = ({ onNavigate }) => {
             Join thousands using RespireX for TB screening
           </p>
           <button
-            onClick={() => onNavigate('login')}
+            onClick={handleGetStarted}
             className="px-10 py-5 bg-white text-gray-900 text-lg rounded-full hover:bg-gray-100 transition shadow-2xl font-semibold btn-primary animate-fade-in stagger-2"
           >
             Start Your Test
@@ -148,7 +201,6 @@ const LandingPage = ({ onNavigate }) => {
         </div>
       </div>
 
-      {/* Footer */}
       <Footer />
     </div>
   );
