@@ -12,14 +12,14 @@ const LandingPage = ({ onNavigate, user, onLogout }) => {
     // 🆕 Fetch stats independently of User Auth
     const fetchStats = async () => {
       try {
-        console.log("📊 Fetching public stats...");
+        console.log("Fetching public stats...");
         // Ensure your backend allows this endpoint to be public!
         const response = await api.get('/stats/'); 
         const count = response.data.total_tests || 0;
-        console.log("✅ Stats received:", count);
+        console.log("Stats received:", count);
         setTotalTests(count);
       } catch (error) {
-        console.warn("⚠️ Could not fetch stats (using default 0):", error.message);
+        console.warn("Could not fetch stats (using default 0):", error.message);
         setTotalTests(0); 
       }
     };
