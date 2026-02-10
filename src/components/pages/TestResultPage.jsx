@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckCircle, AlertTriangle, Download, Share2, Home, FileText } from 'lucide-react';
+import { CheckCircle, AlertTriangle, Home, FileText } from 'lucide-react';
 import Navbar from '../common/Navbar';
 
 const TestResultPage = ({ onNavigate }) => {
@@ -12,7 +12,7 @@ const TestResultPage = ({ onNavigate }) => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
       {/* Navigation */}
-      <Navbar />
+      <Navbar onNavigate={onNavigate} />
 
       <div className="pt-32 pb-20 px-6">
         <div className="max-w-5xl mx-auto">
@@ -60,18 +60,6 @@ const TestResultPage = ({ onNavigate }) => {
                 </div>
               </div>
             </div>
-
-            {/* Action Buttons */}
-            <div className="flex space-x-4 justify-center">
-              <button className="flex items-center space-x-2 px-8 py-4 bg-gray-100 text-gray-900 rounded-xl hover:bg-gray-200 transition font-semibold shadow-lg">
-                <Download className="w-5 h-5" />
-                <span>Download Report</span>
-              </button>
-              <button className="flex items-center space-x-2 px-8 py-4 bg-gray-100 text-gray-900 rounded-xl hover:bg-gray-200 transition font-semibold shadow-lg">
-                <Share2 className="w-5 h-5" />
-                <span>Share Results</span>
-              </button>
-            </div>
           </div>
 
           {/* Detailed Analysis */}
@@ -103,7 +91,7 @@ const TestResultPage = ({ onNavigate }) => {
               <ul className="space-y-4">
                 <li className="flex items-start space-x-3">
                   <div className="w-2 h-2 bg-white rounded-full mt-2 flex-shrink-0"></div>
-                  <span className="leading-relaxed">Save or download your results for your records</span>
+                  <span className="leading-relaxed">Review your results carefully and take note of the AI confidence level</span>
                 </li>
                 <li className="flex items-start space-x-3">
                   <div className="w-2 h-2 bg-white rounded-full mt-2 flex-shrink-0"></div>
