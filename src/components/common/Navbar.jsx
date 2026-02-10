@@ -1,143 +1,140 @@
-import React from 'react';
-import { LogOut, ArrowLeft, X, User } from 'lucide-react';
+import React, { useState } from 'react';
 
-const Navbar = ({ 
-  isLoggedIn, 
-  user, 
-  onLogout, 
-  onBack, 
-  onCancel, 
-  onLogin, 
-  userType, 
-  showBackButton, 
-  showCancelButton,
-  onNavigate // Ensure this is passed to handle logo click
-}) => {
-  const DOCTOR_DEFAULT_IMG = "/doctorpfp.jpg"; 
-  const PATIENT_MALE_IMG = "/male.jpg";
-  const PATIENT_FEMALE_IMG = "/female.jpg";
-  const PATIENT_DEFAULT_IMG = "/male.jpg";
-
-  // Helper: Get Display Name
-  const getDisplayName = () => {
-    if (userType === 'doctor') return 'Doctor';
-    if (!user) return 'Guest';
-    if (user.user_metadata?.full_name) return user.user_metadata.full_name;
-    if (user.email) return user.email.split('@')[0];
-    return 'User';
-  };
-
-  // Helper: Get Avatar URL
-  const getAvatarUrl = () => {
-    if (userType === 'doctor') return DOCTOR_DEFAULT_IMG;
-    if (!user) return null;
-    if (userType === 'patient') {
-      const gender = user.user_metadata?.gender?.toLowerCase(); 
-      if (gender === 'female') return PATIENT_FEMALE_IMG;
-      if (gender === 'male') return PATIENT_MALE_IMG;
-      return PATIENT_DEFAULT_IMG; 
-    }
-    return user.user_metadata?.avatar_url || null;
-  };
+const Navbar = ({ onNavigate, onLogin, isLoggedIn, user, onLogout }) => {
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 glass-effect border-b border-gray-100 bg-white/80 backdrop-blur-md">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
-          
-          {/* Logo Section - Now Clickable */}
-          <div 
-            onClick={() => onNavigate && onNavigate('landing')} 
-            className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity"
+    <nav className="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-50">
+      <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+
+        {/* ─── Logo ─── */}
+        <button onClick={() => onNavigate && onNavigate('home')} className="flex items-center gap-2">
+          <img src="/respirex-logo.png" alt="RespireX" className="h-9 w-9 object-contain" />
+          <span className="text-xl font-bold text-gray-800">
+            Respire<span className="text-blue-600">X</span>
+          </span>
+        </button>
+
+        {/* ─── Desktop Nav Links ─── */}
+        <div className="hidden md:flex items-center gap-6">
+          <button
+            onClick={() => onNavigate && onNavigate('home')}
+            className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors"
           >
-            <span className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
-              RespireX
-            </span>
-            {userType && (
-              <span className={`px-3 py-1 rounded-full text-sm font-semibold ${
-                userType === 'doctor' 
-                  ? 'bg-cyan-100 text-cyan-700' 
-                  : 'bg-blue-100 text-blue-700'
-              }`}>
-                {userType === 'doctor' ? 'Doctor' : 'Patient'}
-              </span>
-            )}
-          </div>
+            Home
+          </button>
 
-          {/* Buttons Section */}
-          <div className="flex items-center space-x-4">
-            
-            {/* Back Button */}
-            {showBackButton && onBack && (
+          {isLoggedIn && (
+            <>
               <button
-                onClick={onBack}
-                className="flex items-center space-x-2 px-6 py-3 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition"
+                onClick={() => onNavigate && onNavigate('patient-home')}
+                className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors"
               >
-                <ArrowLeft className="w-5 h-5" />
-                <span className="font-medium">Back</span>
+                Dashboard
               </button>
-            )}
-
-            {/* Cancel Button */}
-            {showCancelButton && onCancel && (
               <button
-                onClick={onCancel}
-                className="flex items-center space-x-2 px-6 py-3 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition"
+                onClick={() => onNavigate && onNavigate('xray-upload')}
+                className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors"
               >
-                <X className="w-5 h-5" />
-                <span className="font-medium">Cancel</span>
+                X-Ray Upload
               </button>
-            )}
-
-            {/* --- AUTH BUTTONS SWITCH --- */}
-            {isLoggedIn ? (
-              <div className="flex items-center gap-4">
-                
-                {/* User Profile Section */}
-                <div className="flex items-center gap-3 pl-4 border-l border-gray-200">
-                  <div className="h-10 w-10 rounded-full border-2 border-white shadow-sm overflow-hidden bg-gray-100 flex items-center justify-center">
-                    <img 
-                      src={getAvatarUrl()} 
-                      alt="Profile" 
-                      className="h-full w-full object-cover"
-                      onError={(e) => {
-                        e.target.style.display = 'none'; 
-                        e.target.parentElement.innerHTML = '<svg class="w-6 h-6 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
-                      }}
-                    />
-                  </div>
-                  <div className="text-left hidden md:block">
-                    <p className="text-sm font-bold text-gray-900 leading-none">
-                      {getDisplayName()}
-                    </p>
-                    <p className="text-xs text-gray-500 mt-1 capitalize">
-                      {userType || 'Member'}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Logout Button */}
-                <button
-                  onClick={onLogout}
-                  className="flex items-center space-x-2 px-6 py-3 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-full transition group"
-                >
-                  <LogOut className="w-5 h-5 group-hover:text-red-600" />
-                  <span className="font-medium">Logout</span>
-                </button>
-              </div>
-            ) : (
-              // Sign In Button 
               <button
-                onClick={onLogin}
-                className="px-8 py-3 bg-gray-900 text-white rounded-full hover:bg-gray-800 transition font-medium shadow-lg hover:shadow-xl"
+                onClick={() => onNavigate && onNavigate('symptom-test')}
+                className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors"
               >
-                Sign In
+                Symptom Test
               </button>
-            )}
-
-          </div>
+              <button
+                onClick={() => onNavigate && onNavigate('test-history')}
+                className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors"
+              >
+                History
+              </button>
+            </>
+          )}
         </div>
+
+        {/* ─── Desktop Action Buttons ─── */}
+        <div className="hidden md:flex items-center gap-3">
+
+          {/* DIRECT DOCTOR ACCESS BUTTON */}
+          <button
+            onClick={() => onNavigate && onNavigate('doctor')}
+            className="border border-blue-600 text-blue-600 hover:bg-blue-50 text-sm font-semibold px-4 py-1.5 rounded-lg transition-colors"
+          >
+            Doctor Access
+          </button>
+
+          {!isLoggedIn && (
+            <>
+              <button
+                onClick={() => onLogin ? onLogin() : (onNavigate && onNavigate('login'))}
+                className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors"
+              >
+                Login
+              </button>
+              <button
+                onClick={() => onNavigate && onNavigate('signup')}
+                className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-1.5 rounded-lg transition-colors"
+              >
+                Sign Up
+              </button>
+            </>
+          )}
+
+          {isLoggedIn && (
+            <button
+              onClick={() => onLogout && onLogout()}
+              className="text-sm font-medium text-red-500 hover:text-red-700 transition-colors"
+            >
+              Logout
+            </button>
+          )}
+        </div>
+
+        {/* ─── Mobile hamburger ─── */}
+        <button
+          className="md:hidden text-gray-600"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            {menuOpen ? (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            ) : (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            )}
+          </svg>
+        </button>
       </div>
+
+      {/* ─── Mobile Menu ─── */}
+      {menuOpen && (
+        <div className="md:hidden border-t border-gray-100 bg-white px-4 py-3 flex flex-col gap-3">
+          <button onClick={() => { onNavigate && onNavigate('home'); setMenuOpen(false); }} className="text-sm text-gray-700 font-medium text-left">
+            Home
+          </button>
+          <button onClick={() => { onNavigate && onNavigate('doctor'); setMenuOpen(false); }} className="text-sm text-blue-600 font-semibold text-left">
+            Doctor Access
+          </button>
+
+          {isLoggedIn && (
+            <>
+              <button onClick={() => { onNavigate && onNavigate('patient-home'); setMenuOpen(false); }} className="text-sm text-gray-700 font-medium text-left">Dashboard</button>
+              <button onClick={() => { onNavigate && onNavigate('xray-upload'); setMenuOpen(false); }} className="text-sm text-gray-700 font-medium text-left">X-Ray Upload</button>
+              <button onClick={() => { onNavigate && onNavigate('symptom-test'); setMenuOpen(false); }} className="text-sm text-gray-700 font-medium text-left">Symptom Test</button>
+              <button onClick={() => { onNavigate && onNavigate('test-history'); setMenuOpen(false); }} className="text-sm text-gray-700 font-medium text-left">History</button>
+              <button onClick={() => { onLogout && onLogout(); setMenuOpen(false); }} className="text-sm text-red-500 font-medium text-left">Logout</button>
+            </>
+          )}
+
+          {!isLoggedIn && (
+            <>
+              <button onClick={() => { onLogin ? onLogin() : (onNavigate && onNavigate('login')); setMenuOpen(false); }} className="text-sm text-gray-700 font-medium text-left">Login</button>
+              <button onClick={() => { onNavigate && onNavigate('signup'); setMenuOpen(false); }} className="text-sm text-gray-700 font-medium text-left">Sign Up</button>
+            </>
+          )}
+        </div>
+      )}
     </nav>
   );
 };
