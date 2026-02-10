@@ -1,166 +1,51 @@
 import React from 'react';
-import { CheckCircle, Calendar, FileText, Download, Activity } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '../common/Navbar';
 import Footer from '../common/Footer';
 
-const TestHistoryPage = ({ onNavigate }) => {
-  const testHistory = [
-    {
-      id: 1,
-      date: "Dec 28, 2024",
-      fullDate: "December 28, 2024, 2:30 PM",
-      result: "Negative",
-      confidence: 92,
-      riskLevel: "Low"
-    },
-    {
-      id: 2,
-      date: "Nov 15, 2024",
-      fullDate: "November 15, 2024, 10:15 AM",
-      result: "Negative",
-      confidence: 89,
-      riskLevel: "Low"
-    },
-    {
-      id: 3,
-      date: "Oct 3, 2024",
-      fullDate: "October 3, 2024, 4:45 PM",
-      result: "Negative",
-      confidence: 94,
-      riskLevel: "Low"
-    }
-  ];
+const TestHistoryPage = () => {
+  const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex flex-col">
-      {/* Navigation */}
-      <Navbar 
-        showBackButton={true}
-        onBack={() => onNavigate('patient-home')}
-      />
+    <div className="min-h-screen bg-gray-50 flex flex-col">
+      <Navbar />
 
-      <div className="flex-grow pt-32 pb-20 px-6">
-        <div className="max-w-5xl mx-auto">
-          {/* Header */}
-          <div className="mb-12 animate-fade-in">
-            <h1 className="text-5xl font-bold text-gray-900 mb-4">Test History</h1>
-            <p className="text-xl text-gray-600">View all your previous screening results</p>
-          </div>
+      <main className="flex-1 flex flex-col items-center justify-center px-4 py-20 text-center">
 
-          {/* Stats Overview */}
-          <div className="grid md:grid-cols-3 gap-6 mb-12">
-            {[
-              { label: "Total Tests", value: testHistory.length, icon: FileText, color: "blue" },
-              { label: "Negative Results", value: testHistory.filter(t => t.result === "Negative").length, icon: CheckCircle, color: "green" },
-              { label: "Average Confidence", value: `${Math.round(testHistory.reduce((a, b) => a + b.confidence, 0) / testHistory.length)}%`, icon: Activity, color: "purple" }
-            ].map((stat, idx) => (
-              <div key={idx} className={`bg-white rounded-2xl shadow-lg border border-gray-100 p-6 hover-lift animate-fade-in stagger-${idx + 1}`}>
-                <div className="flex items-center justify-between mb-4">
-                  <div className={`w-12 h-12 bg-gradient-to-br from-${stat.color}-100 to-${stat.color}-200 rounded-xl flex items-center justify-center`}>
-                    <stat.icon className={`w-6 h-6 text-${stat.color}-600`} strokeWidth={2} />
-                  </div>
-                  <span className="text-4xl font-bold text-gray-900">{stat.value}</span>
-                </div>
-                <p className="text-sm font-semibold text-gray-600">{stat.label}</p>
-              </div>
-            ))}
-          </div>
-
-          {/* Test History List */}
-          <div className="space-y-6">
-            {testHistory.map((test, idx) => (
-              <div 
-                key={test.id} 
-                className={`bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover-lift animate-fade-in stagger-${idx + 1}`}
-              >
-                <div className="p-8">
-                  <div className="flex items-start justify-between mb-6">
-                    <div className="flex items-start space-x-6">
-                      <div className="w-16 h-16 bg-gradient-to-br from-green-400 to-green-500 rounded-2xl flex items-center justify-center shadow-lg flex-shrink-0">
-                        <CheckCircle className="w-9 h-9 text-white" strokeWidth={2.5} />
-                      </div>
-                      <div>
-                        <h3 className="text-2xl font-bold text-gray-900 mb-2">
-                          {test.result} Result
-                        </h3>
-                        <div className="flex items-center space-x-4 text-gray-600">
-                          <div className="flex items-center space-x-2">
-                            <Calendar className="w-5 h-5" />
-                            <span className="font-medium">{test.fullDate}</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <button className="px-6 py-3 bg-gray-100 text-gray-900 rounded-xl hover:bg-gray-200 transition font-semibold flex items-center space-x-2">
-                      <Download className="w-5 h-5" />
-                      <span>Download</span>
-                    </button>
-                  </div>
-
-                  <div className="grid md:grid-cols-3 gap-6 pt-6 border-t border-gray-100">
-                    <div>
-                      <p className="text-sm text-gray-600 mb-2">Confidence Level</p>
-                      <div className="flex items-center space-x-3">
-                        <div className="flex-1 bg-gray-200 rounded-full h-3 overflow-hidden">
-                          <div 
-                            className="bg-gradient-to-r from-green-500 to-green-600 h-3 rounded-full transition-all"
-                            style={{ width: `${test.confidence}%` }}
-                          />
-                        </div>
-                        <span className="text-lg font-bold text-gray-900">{test.confidence}%</span>
-                      </div>
-                    </div>
-                    <div>
-                      <p className="text-sm text-gray-600 mb-2">Risk Level</p>
-                      <div className={`inline-block px-6 py-2 rounded-xl font-bold ${
-                        test.riskLevel === 'High' ? 'bg-red-100 text-red-700' :
-                        test.riskLevel === 'Medium' ? 'bg-yellow-100 text-yellow-700' :
-                        'bg-green-100 text-green-700'
-                      }`}>
-                        {test.riskLevel}
-                      </div>
-                    </div>
-                    <div>
-                      <p className="text-sm text-gray-600 mb-2">Test Status</p>
-                      <div className="inline-block px-6 py-2 bg-blue-100 text-blue-700 rounded-xl font-bold">
-                        Completed
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Empty State (if no history) */}
-          {testHistory.length === 0 && (
-            <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-16 text-center">
-              <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <FileText className="w-12 h-12 text-gray-400" />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">No Test History Yet</h3>
-              <p className="text-gray-600 mb-8">Start your first TB screening test to see results here</p>
-              <button
-                onClick={() => onNavigate('symptom-test')}
-                className="px-10 py-4 bg-gray-900 text-white rounded-xl hover:bg-gray-800 transition font-semibold text-lg shadow-lg hover:shadow-xl btn-primary"
-              >
-                Start Test
-              </button>
-            </div>
-          )}
-
-          {/* Info Card */}
-          <div className="mt-12 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-2xl p-8 text-white animate-fade-in">
-            <h3 className="text-2xl font-bold mb-4">Keep Track of Your Health</h3>
-            <p className="text-lg leading-relaxed opacity-90">
-              Regular screening helps in early detection and better health outcomes. 
-              We recommend taking a test every 3 months or if you experience any symptoms.
-            </p>
-          </div>
+        {/* ─── Icon ─── */}
+        <div className="bg-blue-50 rounded-full p-6 mb-6">
+          <svg
+            className="w-16 h-16 text-blue-500"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={1.5}
+              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
         </div>
-      </div>
 
-      {/* Footer */}
+        {/* ─── Text ─── */}
+        <h1 className="text-3xl font-bold text-gray-800 mb-3">Coming Soon</h1>
+        <p className="text-gray-500 max-w-md mx-auto text-base leading-relaxed">
+          Test History will be available in the next release.
+          You'll be able to view all your past X-ray and symptom tests here.
+        </p>
+
+        {/* ─── Back button ─── */}
+        <button
+          onClick={() => navigate('/patient')}
+          className="mt-8 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2.5 rounded-lg transition-colors"
+        >
+          ← Back to Dashboard
+        </button>
+      </main>
+
       <Footer />
     </div>
   );
