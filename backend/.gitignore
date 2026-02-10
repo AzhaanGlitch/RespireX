@@ -1,0 +1,38 @@
+# Python / Django
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment (Very Important)
+venv/
+env/
+.venv/
+
+# Environment Variables (Security)
+.env
+.env.local
+.env.example
+
+# Database (If using SQLite)
+db.sqlite3
+db.sqlite3-journal
+
+# Local Settings
+*/settings/local.py
+
+# Static and Media files (User uploads should not be in git)
+media/
+static/
+staticfiles/
+
+# VS Code / Editor settings
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Mac System Files
+.DS_Store
+
+# Logs
+*.log
