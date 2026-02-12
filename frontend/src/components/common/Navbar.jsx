@@ -54,7 +54,7 @@ const Navbar = ({ onNavigate, onLogin, isLoggedIn, user, onLogout }) => {
           {/* DIRECT DOCTOR ACCESS BUTTON */}
           <button
             onClick={() => onNavigate && onNavigate('doctor')}
-            className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors"
+            className="text-sm font-semibold text-gray-800 hover:text-blue-600 transition-colors"
           >
             Doctor Access
           </button>
@@ -63,7 +63,7 @@ const Navbar = ({ onNavigate, onLogin, isLoggedIn, user, onLogout }) => {
             <>
               <button
                 onClick={() => onLogin ? onLogin() : (onNavigate && onNavigate('login'))}
-                className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors"
+                className="text-sm font-semibold text-gray-800 hover:text-blue-600 transition-colors"
               >
                 Login
               </button>
@@ -107,7 +107,7 @@ const Navbar = ({ onNavigate, onLogin, isLoggedIn, user, onLogout }) => {
           <button onClick={() => { onNavigate && onNavigate('home'); setMenuOpen(false); }} className="text-sm text-gray-700 font-medium text-left">
             Home
           </button>
-          <button onClick={() => { onNavigate && onNavigate('doctor'); setMenuOpen(false); }} className="text-sm text-gray-700 font-medium text-left">
+          <button onClick={() => { onNavigate && onNavigate('doctor'); setMenuOpen(false); }} className="text-sm text-gray-800 font-semibold text-left">
             Doctor Access
           </button>
 
@@ -123,7 +123,7 @@ const Navbar = ({ onNavigate, onLogin, isLoggedIn, user, onLogout }) => {
 
           {!isLoggedIn && (
             <>
-              <button onClick={() => { onLogin ? onLogin() : (onNavigate && onNavigate('login')); setMenuOpen(false); }} className="text-sm text-gray-700 font-medium text-left">Login</button>
+              <button onClick={() => { onLogin ? onLogin() : (onNavigate && onNavigate('login')); setMenuOpen(false); }} className="text-sm text-gray-800 font-semibold text-left">Login</button>
               <button onClick={() => { onNavigate && onNavigate('signup'); setMenuOpen(false); }} className="text-sm text-gray-700 font-medium text-left">Sign Up</button>
             </>
           )}
