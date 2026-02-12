@@ -5,6 +5,7 @@ from sendgrid.helpers.mail import (
     Mail, Attachment, FileContent, FileName, FileType, Disposition
 )
 from django.conf import settings
+from datetime import datetime
 
 # --- CONFIGURATION ---
 # 1. HARDCODE YOUR KEY HERE FOR TESTING (Remove before deploying to GitHub)
@@ -93,3 +94,38 @@ def get_medical_email_template(patient_name, test_date, risk_level, confidence):
         </div>
     </div>
     """
+
+def send_test_result_email(user_email, prediction):
+    """
+    Orchestrates sending the test result email.
+    Handles both dict (future) and tuple (current ml_engine) formats.
+    """
+    # 1. Extract data safely
+    if isinstance(prediction, dict):
+        label = prediction.get('label', 'Analysis Complete')
+        confidence = prediction.get('confidence', 0)
+        # Estimate risk if missing
+        risk_level = "High" if label == "Positive" else "Low"
+    elif isinstance(prediction, (tuple, list)) and len(prediction) >= 3:
+        # Handle tuple from ml_engine.py: (result, confidence, risk_level)
+        label = prediction[0]
+        confidence = prediction[1]
+        risk_level = prediction[2]
+    else:
+        label = "Unknown"
+        confidence = 0
+        risk_level = "Low"
+
+    # 2. Prepare Email
+    subject = f"RespireX Result: {label}"
+    date_str = datetime.now().strftime("%B %d, %Y")
+    
+    html_content = get_medical_email_template(
+        patient_name="Valued Patient", 
+        test_date=date_str, 
+        risk_level=risk_level, 
+        confidence=confidence
+    )
+
+    # 3. Send
+    send_html_email(subject, [user_email], html_content)

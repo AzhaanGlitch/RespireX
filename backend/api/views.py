@@ -7,7 +7,7 @@ from rest_framework import status
 
 from .models import UserProfile, TestResult
 from .serializers import UserProfileSerializer, TestResultSerializer
-from .ml_engine import predict
+from .ml_engine import predict_xray as predict
 from .email_utils import send_test_result_email
 from .authentication import authenticate_user, get_user_from_token
 # pdf_generator import REMOVED for prototype
