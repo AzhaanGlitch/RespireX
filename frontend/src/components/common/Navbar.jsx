@@ -51,42 +51,38 @@ const Navbar = ({ onNavigate, onLogin, isLoggedIn, user, onLogout }) => {
         {/* ─── Desktop Action Buttons ─── */}
         <div className="hidden md:flex items-center gap-3">
 
-          {!isLoggedIn ? (
+          {/* DIRECT DOCTOR ACCESS BUTTON */}
+          <button
+            onClick={() => onNavigate && onNavigate('doctor')}
+            className="border border-blue-600 text-blue-600 hover:bg-blue-50 text-sm font-semibold px-4 py-1.5 rounded-lg transition-colors"
+          >
+            Doctor Access
+          </button>
+
+          {!isLoggedIn && (
             <>
               <button
-                onClick={() => onNavigate && onNavigate('doctor')}
-                className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors"
-              >
-                Doctor Access
-              </button>
-              <button
                 onClick={() => onLogin ? onLogin() : (onNavigate && onNavigate('login'))}
-                className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors"
+                className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors"
               >
                 Login
               </button>
               <button
                 onClick={() => onNavigate && onNavigate('signup')}
-                className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-5 py-2 rounded-lg transition-colors"
+                className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-1.5 rounded-lg transition-colors"
               >
                 Sign Up
               </button>
             </>
-          ) : (
-            <>
-              <button
-                onClick={() => onNavigate && onNavigate('doctor')}
-                className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors"
-              >
-                Doctor Access
-              </button>
-              <button
-                onClick={() => onLogout && onLogout()}
-                className="text-sm font-medium text-gray-700 hover:text-red-600 transition-colors"
-              >
-                Logout
-              </button>
-            </>
+          )}
+
+          {isLoggedIn && (
+            <button
+              onClick={() => onLogout && onLogout()}
+              className="text-sm font-medium text-red-500 hover:text-red-700 transition-colors"
+            >
+              Logout
+            </button>
           )}
         </div>
 
@@ -111,6 +107,9 @@ const Navbar = ({ onNavigate, onLogin, isLoggedIn, user, onLogout }) => {
           <button onClick={() => { onNavigate && onNavigate('home'); setMenuOpen(false); }} className="text-sm text-gray-700 font-medium text-left">
             Home
           </button>
+          <button onClick={() => { onNavigate && onNavigate('doctor'); setMenuOpen(false); }} className="text-sm text-blue-600 font-semibold text-left">
+            Doctor Access
+          </button>
 
           {isLoggedIn && (
             <>
@@ -118,22 +117,15 @@ const Navbar = ({ onNavigate, onLogin, isLoggedIn, user, onLogout }) => {
               <button onClick={() => { onNavigate && onNavigate('xray-upload'); setMenuOpen(false); }} className="text-sm text-gray-700 font-medium text-left">X-Ray Upload</button>
               <button onClick={() => { onNavigate && onNavigate('symptom-test'); setMenuOpen(false); }} className="text-sm text-gray-700 font-medium text-left">Symptom Test</button>
               <button onClick={() => { onNavigate && onNavigate('test-history'); setMenuOpen(false); }} className="text-sm text-gray-700 font-medium text-left">History</button>
+              <button onClick={() => { onLogout && onLogout(); setMenuOpen(false); }} className="text-sm text-red-500 font-medium text-left">Logout</button>
             </>
           )}
-
-          <button onClick={() => { onNavigate && onNavigate('doctor'); setMenuOpen(false); }} className="text-sm text-gray-700 font-medium text-left">
-            Doctor Access
-          </button>
 
           {!isLoggedIn && (
             <>
               <button onClick={() => { onLogin ? onLogin() : (onNavigate && onNavigate('login')); setMenuOpen(false); }} className="text-sm text-gray-700 font-medium text-left">Login</button>
-              <button onClick={() => { onNavigate && onNavigate('signup'); setMenuOpen(false); }} className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium text-center py-2 rounded-lg transition-colors">Sign Up</button>
+              <button onClick={() => { onNavigate && onNavigate('signup'); setMenuOpen(false); }} className="text-sm text-gray-700 font-medium text-left">Sign Up</button>
             </>
-          )}
-
-          {isLoggedIn && (
-            <button onClick={() => { onLogout && onLogout(); setMenuOpen(false); }} className="text-sm text-gray-700 font-medium text-left">Logout</button>
           )}
         </div>
       )}
