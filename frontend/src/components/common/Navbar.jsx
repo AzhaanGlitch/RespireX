@@ -54,7 +54,7 @@ const Navbar = ({ onNavigate, onLogin, isLoggedIn, user, onLogout }) => {
           {/* DIRECT DOCTOR ACCESS BUTTON */}
           <button
             onClick={() => onNavigate && onNavigate('doctor')}
-            className="border border-blue-600 text-blue-600 hover:bg-blue-50 text-sm font-semibold px-4 py-1.5 rounded-lg transition-colors"
+            className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors"
           >
             Doctor Access
           </button>
@@ -107,7 +107,7 @@ const Navbar = ({ onNavigate, onLogin, isLoggedIn, user, onLogout }) => {
           <button onClick={() => { onNavigate && onNavigate('home'); setMenuOpen(false); }} className="text-sm text-gray-700 font-medium text-left">
             Home
           </button>
-          <button onClick={() => { onNavigate && onNavigate('doctor'); setMenuOpen(false); }} className="text-sm text-blue-600 font-semibold text-left">
+          <button onClick={() => { onNavigate && onNavigate('doctor'); setMenuOpen(false); }} className="text-sm text-gray-700 font-medium text-left">
             Doctor Access
           </button>
 
