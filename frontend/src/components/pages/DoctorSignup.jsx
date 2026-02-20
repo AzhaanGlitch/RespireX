@@ -1,3 +1,4 @@
+// frontend/components/pages/DoctorSignup.jsx
 import React, { useState } from 'react';
 import { Stethoscope, Shield, Key } from 'lucide-react';
 import Navbar from '../common/Navbar';
