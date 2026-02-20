@@ -1,3 +1,4 @@
+// frontend/components/pages/DoctorHomePage.jsx
 import React, { useState, useEffect } from 'react';
 import Navbar from '../common/Navbar';
 import Footer from '../common/Footer';
