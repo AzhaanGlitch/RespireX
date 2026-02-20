@@ -1,3 +1,4 @@
+// frontend/components/pages/LandingPage.jsx
 import React, { useState, useEffect } from 'react';
 import { Zap, TrendingUp, Shield, ChevronRight } from 'lucide-react';
 import Navbar from '../common/Navbar';
