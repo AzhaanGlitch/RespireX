@@ -1,3 +1,4 @@
+// frontend/components/common/Footer.jsx
 import React from 'react';
 
 const Footer = () => {
