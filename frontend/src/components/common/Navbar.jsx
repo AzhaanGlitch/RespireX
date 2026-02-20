@@ -1,3 +1,4 @@
+// frontend/components/common/Navbar.jsx
 import React, { useState } from 'react';
 
 const Navbar = ({ onNavigate, onLogin, isLoggedIn, user, onLogout }) => {
